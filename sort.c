@@ -137,14 +137,9 @@ void countSort(unsigned int inpArray[], int arrLen) {
     unsigned int highestVal = findHighestVal(inpArray, arrLen);
     unsigned int counts[highestVal + 1];
     for (int i = 0; i < highestVal + 1; i++) {counts[i] = 0;}
-    printf("%i\n", highestVal);
-
     //loop through input array. whatever current value is add one to the corresponding index in counts array
-    for (int i = 0; i < arrLen; i++) {
+    for (int i = 0; i < arrLen; i++) 
         counts[inpArray[i]]++; //increment value at the index in counts that corresponds to the value at i in the input array
-        printf("%i\n", counts[inpArray[i]]);
-    }
-    printArray(counts, highestVal + 1, 0);
     int inpArrayIter = 0;
     //loop through whole counts array
     for (int i = 0; i < highestVal + 1; i++) {
