@@ -124,6 +124,38 @@ void quickSort(int inpArray[], int start, int end) {
     quickSort(inpArray, backIndex + 1, end); //greater than pivot
 }
 
+unsigned int findHighestVal(unsigned int inpArray[], int arrLen) { 
+    unsigned int max = 0; 
+    for (int i = 0; i < arrLen; i++) 
+        max = (inpArray[i] > max) ? inpArray[i] : max;
+    return max;
+}
+
+//needs to be unsigned so we dont try to assign a value to an array at a negative index
+//construct sorted array by counted number of occourences of each value. this work best if the range of values is pretty low and you know there will be no extreme outliers
+void countSort(unsigned int inpArray[], int arrLen) {
+    unsigned int highestVal = findHighestVal(inpArray, arrLen);
+    unsigned int counts[highestVal + 1];
+    for (int i = 0; i < highestVal + 1; i++) {counts[i] = 0;}
+    printf("%i\n", highestVal);
+
+    //loop through input array. whatever current value is add one to the corresponding index in counts array
+    for (int i = 0; i < arrLen; i++) {
+        counts[inpArray[i]]++; //increment value at the index in counts that corresponds to the value at i in the input array
+        printf("%i\n", counts[inpArray[i]]);
+    }
+    printArray(counts, highestVal + 1, 0);
+    int inpArrayIter = 0;
+    //loop through whole counts array
+    for (int i = 0; i < highestVal + 1; i++) {
+        //write the current index to the input array the current value at the current index times
+        for (int j = 0; j < counts[i]; j++) {
+            inpArray[inpArrayIter] = i;
+            inpArrayIter++;
+        }
+    }
+}
+
 //selects less of the two array lengths as its iteration amount
 void copyArray(int origin[], int destination[], int originLen, int destinationLen) { 
     int iterAmnt = (originLen < destinationLen) ? originLen : destinationLen;
@@ -152,5 +184,10 @@ int main() {
     puts("mergesort");
     printArray(myArray, arrLen, 0);
     bubbleSort(myArray, arrLen);
+    printArray(myArray, arrLen, 0);
+    copyArray(initConfig, myArray, arrLen, arrLen);
+    puts("countsort");
+    printArray(myArray, arrLen, 0);
+    countSort(myArray, arrLen);
     printArray(myArray, arrLen, 0);
 }
